@@ -1,0 +1,34 @@
+spring:
+ application:
+  name: estoque-rest
+ profiles:
+  active: ${PROFILE:dev}
+---
+spring:
+ profiles: dev
+ datasource:
+  hikari: 
+   connectionTimeout: 20000
+   maximumPoolSize: 10
+   poolName: HikariPoolZZZ
+  platform: MySQL5Dialect
+  driverClassName: com.mysql.cj.jdbc.Driver
+  url: jdbc:mysql://${DATABASE_URL:localhost:3306}/${DATABASE_NAME:estoque}
+  username: ${DATABASE_USERNAME:root}   
+  password: ${DATABASE_PASSWORD:teste123}
+ jpa:
+  show-sql: true
+  hibernate:
+   ddl-auto: update
+  properties:
+   hibernate: 
+    format_sql: true
+    dialect: org.hibernate.dialect.MySQL5Dialect
+jwt:
+  secret: DFAS63456FGSD567DFH45699HG
+  prefix: Bearer
+
+server:
+ servlet:
+  context-path: /v1/sandbox
+ port: ${SERVER_PORT:5000}
