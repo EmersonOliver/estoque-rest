@@ -1,4 +1,4 @@
-package br.com.estoque.token.filter;
+package br.com.estoque.token;
 
 import java.io.IOException;
 import java.util.Optional;
@@ -14,7 +14,6 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
-import br.com.estoque.token.service.TokenService;
 import br.com.estoque.usuario.model.UsuarioModel;
 import br.com.estoque.usuario.repository.UsuarioRepository;
 
@@ -23,7 +22,7 @@ public class TokenAuthenticationFilter extends OncePerRequestFilter {
 	
 
 	@Autowired
-	private TokenService tokenService;
+	private TokenProvider tokenService;
 	
 	@Autowired
 	private UsuarioRepository usuarioRepository;

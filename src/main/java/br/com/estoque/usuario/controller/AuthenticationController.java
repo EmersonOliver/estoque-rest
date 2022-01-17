@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.com.estoque.token.service.TokenService;
+import br.com.estoque.token.TokenProvider;
 import br.com.estoque.usuario.dto.AccountAuthentication;
 import br.com.estoque.usuario.dto.TokenDTO;
 import br.com.estoque.util.EncryptionSHA;
@@ -25,7 +25,7 @@ public class AuthenticationController {
 	private AuthenticationManager authenticationManager;
 
 	@Autowired
-	private TokenService tokenService;
+	private TokenProvider tokenService;
 	
 	@PostMapping
 	public ResponseEntity<TokenDTO> auth(@RequestBody AccountAuthentication account) throws NoSuchAlgorithmException{

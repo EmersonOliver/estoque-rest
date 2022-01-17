@@ -15,7 +15,7 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
 
-import br.com.estoque.token.filter.TokenAuthenticationFilter;
+import br.com.estoque.token.TokenAuthenticationFilter;
 import br.com.estoque.usuario.service.AuthenticationService;
 
 @EnableWebSecurity
