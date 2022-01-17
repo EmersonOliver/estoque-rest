@@ -1,6 +1,7 @@
 package br.com.estoque.usuario.controller;
 
 import java.security.NoSuchAlgorithmException;
+import java.util.List;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,8 +37,7 @@ public class UsuarioController {
 	
 	@RequestMapping("/users")
 	@ResponseBody
-	public String getUsers() {
-		return "{\"users\":[{\"name\":\"Lucas\", \"country\":\"Brazil\"}," +
-		           "{\"name\":\"Jackie\",\"country\":\"China\"}]}";
+	public List<UsuarioModel> getUsers() {
+		return this.usuarioService.carregarTodosUsuarios();
 	}
 }
