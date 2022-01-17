@@ -1,23 +1,31 @@
 package br.com.estoque.usuario.model;
 
-import java.io.Serializable;
+import java.util.Collection;
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 
 @Data
+@AllArgsConstructor
 @NoArgsConstructor
 @Entity
 @Table(name = "tb_usuario")
-public class UsuarioModel implements Serializable{
+public class UsuarioModel implements UserDetails{
 	
 	private static final long serialVersionUID = 1L;
 
@@ -38,23 +46,55 @@ public class UsuarioModel implements Serializable{
 	@Column(name="telefone_usuario")
 	private String telefoneUsuario;
 	
+	@ManyToMany(fetch = FetchType.EAGER)
+	private Set<PerfisModel> perfis; 
 	
-
-	public UsuarioModel(Long idUsuario, String nomeUsuario, String emailUsuario, String senhaUsuario,
-			String telefoneUsuario) {
-		super();
-		this.idUsuario = idUsuario;
-		this.nomeUsuario = nomeUsuario;
-		this.emailUsuario = emailUsuario;
-		this.senhaUsuario = senhaUsuario;
-		this.telefoneUsuario = telefoneUsuario;
+	
+	@Override
+	public Collection<? extends GrantedAuthority> getAuthorities() {
+		return this.perfis;
 	}
 
 
 
-	public UsuarioModel(String emailUsuario, String senhaUsuario) {
-		super();
-		this.emailUsuario = emailUsuario;
-		this.senhaUsuario = senhaUsuario;
+	@Override
+	public String getPassword() {
+		return this.senhaUsuario;
+	}
+
+
+
+	@Override
+	public String getUsername() {
+		return this.emailUsuario;
+	}
+
+
+
+	@Override
+	public boolean isAccountNonExpired() {
+		// TODO Auto-generated method stub
+		return true;
+	}
+
+
+
+	@Override
+	public boolean isAccountNonLocked() {
+		return true;
+	}
+
+
+
+	@Override
+	public boolean isCredentialsNonExpired() {
+		return true;
+	}
+
+
+
+	@Override
+	public boolean isEnabled() {
+		return true;
 	}
 }

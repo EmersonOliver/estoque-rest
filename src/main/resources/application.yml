@@ -29,6 +29,4 @@ jwt:
   prefix: Bearer
 
 server:
- servlet:
-  context-path: /v1/sandbox
  port: ${SERVER_PORT:5000}

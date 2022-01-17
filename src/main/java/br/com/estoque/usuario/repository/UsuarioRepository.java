@@ -1,5 +1,7 @@
 package br.com.estoque.usuario.repository;
 
+import java.util.Optional;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -15,5 +17,8 @@ public interface UsuarioRepository extends JpaRepository<UsuarioModel, Long>{
 	
 	@Query(name="UsuarioModel.usuarioByEmail", value = "SELECT u FROM UsuarioModel u WHERE u.emailUsuario =:emailUsuario")
 	public UsuarioModel usuarioByEmail(@Param("emailUsuario")String emailUsuario);
+	
+	@Query(name = "UsuarioModel.usuarioEmail", value = "SELECT u FROM UsuarioModel u WHERE u.emailUsuario =:emailUsuario")
+	public Optional<UsuarioModel> findByEmail(@Param("emailUsuario") String emailUsuario);
 
 }
