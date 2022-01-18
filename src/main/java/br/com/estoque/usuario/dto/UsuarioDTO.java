@@ -10,17 +10,19 @@ import lombok.NoArgsConstructor;
 public class UsuarioDTO {
 	
 	@NotEmpty(message = "Nome nao pode ser vazio")
-	private String nomeUsuario;
+	private String nome;
+	
+	@NotEmpty(message = "Sobrenome nao pode ser vazio")
+	private String sobrenome;
 	
 	@NotEmpty(message = "Email nao pode ser vazio")
-	private String emailUsuario;
+	private String email;
 	
 	@NotEmpty(message = "Senha nao pode ser vazio")
-	private String senhaUsuario;
+	private String senha;
 	
 	@NotEmpty(message = "Telefone nao pode ser vazio")
-	private String telefoneUsuario;
+	private String telefone;
 	
-	private String token;
 
 }
