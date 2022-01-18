@@ -67,6 +67,13 @@ public class DepartamentoModel implements Serializable {
 		this.equipamentos = equipamentos;
 		this.cidade = cidade;
 	}
+
+	public DepartamentoModel(String nomeDepartamento) {
+		super();
+		this.nomeDepartamento = nomeDepartamento;
+	}
+	
+	
 	
 	
 

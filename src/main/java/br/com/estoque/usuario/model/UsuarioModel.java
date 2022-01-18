@@ -15,11 +15,15 @@ import javax.persistence.Table;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-
+@JsonInclude(Include.NON_NULL)
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -40,12 +44,14 @@ public class UsuarioModel implements UserDetails{
 	@Column(name = "email_usuario")
 	private String emailUsuario;
 	
+	@JsonIgnore
 	@Column(name = "senha_usuario")
 	private String senhaUsuario;
 	
 	@Column(name="telefone_usuario")
 	private String telefoneUsuario;
 	
+	@JsonIgnore
 	@ManyToMany(fetch = FetchType.EAGER)
 	private Set<PerfisModel> perfis; 
 	
@@ -57,6 +63,7 @@ public class UsuarioModel implements UserDetails{
 
 
 
+	@JsonIgnore
 	@Override
 	public String getPassword() {
 		return this.senhaUsuario;

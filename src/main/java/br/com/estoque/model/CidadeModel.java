@@ -42,4 +42,11 @@ public class CidadeModel implements Serializable {
 		this.uf = uf;
 	}
 
+	public CidadeModel(String cidade, String estado, String uf) {
+		super();
+		this.cidade = cidade;
+		this.estado = estado;
+		this.uf = uf;
+	}
+
 }

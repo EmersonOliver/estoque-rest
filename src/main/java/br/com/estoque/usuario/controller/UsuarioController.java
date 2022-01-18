@@ -1,16 +1,17 @@
 package br.com.estoque.usuario.controller;
 
 import java.security.NoSuchAlgorithmException;
-import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.estoque.usuario.dto.UsuarioDTO;
@@ -25,7 +26,7 @@ public class UsuarioController {
 	@Autowired
 	private UsuarioService usuarioService;
 
-	@PostMapping(consumes = "application/json;charset=utf-8", produces = "application/json;charset=utf-8", value = "register")
+	@PostMapping(consumes = "application/json;charset=utf-8", produces = "application/json;charset=utf-8", value = "cadastrar")
 	public ResponseEntity<UsuarioModel> registerUsuario(@RequestBody UsuarioDTO usuarioDTO)
 			throws NoSuchAlgorithmException {
 		UsuarioModel usuarioModel = new UsuarioModel();
@@ -34,10 +35,14 @@ public class UsuarioController {
 		this.usuarioService.criarUsuario(usuarioModel);
 		return new ResponseEntity<>(usuarioModel, HttpStatus.CREATED);
 	}
-	
-	@RequestMapping("/users")
-	@ResponseBody
-	public List<UsuarioModel> getUsers() {
-		return this.usuarioService.carregarTodosUsuarios();
+
+	@GetMapping(produces = "application/json;charset=utf-8", value ="/carregar")
+	public ResponseEntity<?> getUsers(@RequestParam(value = "idUsuario", required = false) Long idUsuario) {
+		Optional<UsuarioModel> usuario = 
+				Optional.ofNullable(this.usuarioService.get(idUsuario).get());
+		return new ResponseEntity<>(usuario, HttpStatus.OK);
+		
 	}
+	
+	
 }
