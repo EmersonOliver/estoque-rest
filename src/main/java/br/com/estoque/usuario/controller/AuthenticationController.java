@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 import br.com.estoque.token.TokenProvider;
 import br.com.estoque.usuario.dto.AccountAuthentication;
 import br.com.estoque.usuario.dto.TokenDTO;
+import br.com.estoque.usuario.model.UsuarioModel;
 import br.com.estoque.util.EncryptionSHA;
 
 @RestController
@@ -32,8 +33,10 @@ public class AuthenticationController {
 		UsernamePasswordAuthenticationToken usernameAuthToken = 
 				new UsernamePasswordAuthenticationToken(account.getEmail(),EncryptionSHA.encrypt(account.getPassword()));
 		Authentication authentication = authenticationManager.authenticate(usernameAuthToken);
+		UsuarioModel usuario = (UsuarioModel) authentication.getPrincipal();
+		System.out.println(usuario.getNomeUsuario());
 		String token = tokenService.generateToken(authentication);
-		return ResponseEntity.ok(TokenDTO.builder().type("Bearer").token(token).build());
+		return ResponseEntity.ok(TokenDTO.builder().nome(usuario.getNomeUsuario()).type("Bearer").token(token).build());
 	}
 }
 

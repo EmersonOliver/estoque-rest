@@ -15,13 +15,13 @@ import br.com.estoque.model.DepartamentoModel;
 import br.com.estoque.service.DepartamentoCidadeService;
 
 @RestController
-@RequestMapping("/departamento")
-public class DepartamentoController {
+@RequestMapping("/equipamento")
+public class EquipamentoController {
 
 	@Autowired
 	private DepartamentoCidadeService service;
 
-	@PostMapping(value = "register", consumes = "application/json;charset=utf-8", produces = "application/json;charset=utf-8")
+	@PostMapping(value = "cadastrar", consumes = "application/json;charset=utf-8", produces = "application/json;charset=utf-8")
 	public ResponseEntity<?> registrarDepartamento(@RequestBody @Valid DepartamentoDTO departamentoDTO) {
 
 		CidadeModel cidade = new CidadeModel(departamentoDTO.getCidade(), departamentoDTO.getEstado(),

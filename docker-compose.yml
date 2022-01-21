@@ -1,0 +1,41 @@
+version: '3.8'
+
+services:
+ estoque-bd:
+  image: mysql
+  environment:
+   MYSQL_ROOT_PASSWORD: root123
+   MYSQL_DATABASE: estoque
+   MYSQL_USER: usuario
+   MYSQL_PASSWORD: dev123
+  ports:
+   - "33062:3306"
+  volumes:
+   - ./mysql-docker:/var/lib/mysql
+  networks:
+   - dev-network
+  restart: unless-stopped
+
+ estoque-api:
+  image: eaoliveira5/estoque-rest:latest
+  environment:
+   - SERVER_PORT=8080
+   - PROFILE=dev
+   - DATABASE_URL=estoque-bd
+   - DATABASE_PORT=3306
+   - DATABASE_USERNAME=usuario
+   - DATABASE_PASSWORD=dev123
+   - DATABASE_NAME=estoque
+  ports:
+   - "8181:8080"
+  depends_on:
+   - estoque-bd
+  links: 
+   - estoque-bd
+  networks:
+   - dev-network
+  restart: unless-stopped
+  
+networks:
+ dev-network:
+  driver: bridge
