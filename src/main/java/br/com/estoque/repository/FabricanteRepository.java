@@ -12,7 +12,7 @@ import br.com.estoque.model.FabricanteModel;
 @Repository
 public interface FabricanteRepository extends JpaRepository<FabricanteModel, Long> {
 	
-	@Query(name = "FabricanteModel.buscarFabricanteByNomeFabricante", value = "SELECT f FROM FabricanteModel f WHERE UPPER(f.nomeFabricante) = :nomeFabricate")
+	@Query(name = "FabricanteModel.buscarFabricanteByNomeFabricante", value = "SELECT f FROM FabricanteModel f WHERE UPPER(f.nomeFabricante) = :nomeFabricante")
 	public Optional<FabricanteModel> buscarFabricanteByNomeFabricante(@Param("nomeFabricante") String nomeFabricante);
 
 }
