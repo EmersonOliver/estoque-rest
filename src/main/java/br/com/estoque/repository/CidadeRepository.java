@@ -12,8 +12,8 @@ import br.com.estoque.model.CidadeModel;
 @Repository
 public interface CidadeRepository extends JpaRepository<CidadeModel, Long> {
 
-	@Query(name = "CidadeModel.existCidade", value = "SELECT c FROM CidadeModel c WHERE c.cidade =:cidade and c.estado=:estado and c.uf = :uf")
-	Optional<CidadeModel> existCidade(@Param("cidade") String cidade, @Param("estado") String estado,
+	@Query(name = "CidadeModel.carregarCidade", value = "SELECT c FROM CidadeModel c WHERE c.cidade =:cidade and c.estado=:estado and c.uf = :uf")
+	Optional<CidadeModel> carregarCidade(@Param("cidade") String cidade, @Param("estado") String estado,
 			@Param("uf") String uf);
 
 }

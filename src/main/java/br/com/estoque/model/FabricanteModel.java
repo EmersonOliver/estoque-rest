@@ -48,4 +48,7 @@ public class FabricanteModel implements Serializable {
 		this.equipamemntos = equipamemntos;
 	}
 
+	public void toUpperCaseAndTrim() {
+		this.nomeFabricante = this.nomeFabricante.toUpperCase().trim();
+	}
 }

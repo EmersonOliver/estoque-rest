@@ -48,5 +48,12 @@ public class CidadeModel implements Serializable {
 		this.estado = estado;
 		this.uf = uf;
 	}
-
+	
+	public void toUpperCaseAndTrim() {
+		this.cidade = this.cidade.toUpperCase().trim();
+		this.estado = this.estado.toUpperCase().trim();
+		this.uf = this.uf.toUpperCase().trim();
+	}
+	
+	
 }

@@ -73,6 +73,9 @@ public class DepartamentoModel implements Serializable {
 		this.nomeDepartamento = nomeDepartamento;
 	}
 	
+	public void toUpperCaseAndTrim() {
+		this.nomeDepartamento = this.nomeDepartamento.toUpperCase().trim();
+	}
 	
 	
 	

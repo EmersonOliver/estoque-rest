@@ -12,7 +12,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-import br.com.estoque.enums.StatusEquipamentoEnum;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -31,6 +32,9 @@ public class EquipamentoModel implements Serializable{
 	
 	@Column(name = "id_fabricante")
 	private Long idFabricante;
+	
+	@Column(name = "id_estoque")
+	private Long idEstoque;
 	
 	@Column(name = "id_departamento")
 	private Long idDepartamento;	
@@ -51,7 +55,7 @@ public class EquipamentoModel implements Serializable{
 	private String cor;
 	
 	@Column(name = "status")
-	private StatusEquipamentoEnum statusEquipamento;
+	private int statusEquipamento;
 	
 	@ManyToOne
 	@JoinColumn(name = "id_departamento", 
@@ -68,6 +72,11 @@ public class EquipamentoModel implements Serializable{
 	updatable = false,
 	foreignKey = @ForeignKey(name="fk_id_fabricante"))
 	private FabricanteModel fabricante;
+	
+	@JsonIgnoreProperties("equipamentos")
+	@ManyToOne
+	@JoinColumn(name = "id_estoque", referencedColumnName = "id_estoque", insertable = false, updatable = false, nullable = true, foreignKey = @ForeignKey(name="fk_id_estoque"))
+	private EstoqueModel estoque;
 	
 	
 }
