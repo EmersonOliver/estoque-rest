@@ -87,7 +87,7 @@ public class EquipamentoController {
 	
 	private void cadastrarEstoque(EstoqueDTO estoque, EstoqueModel estoqueModel) {
 		try {
-			estoqueModel.setDataEntrada(DataUtil.obterDataFormatada(estoque.getDataEntradaEstoque(), DataUtil.FORMATO_DATA_HORA_ANGULAR));
+			estoqueModel.setDataEntrada(DataUtil.obterDataFormatada(estoque.getDataEntradaEstoque(), DataUtil.FORMATO_DATA_ANGULAR_HIFEN));
 			estoqueModel.setStatusEstoque(StatusEstoqueEnum.NOVA_ENTRADA.getCodigo());
 			estoqueModel = this.service.cadastrarEntradaEstoque(estoqueModel);
 		} catch (Exception e) {
