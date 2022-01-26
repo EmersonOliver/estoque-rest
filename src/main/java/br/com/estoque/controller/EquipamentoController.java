@@ -47,24 +47,24 @@ public class EquipamentoController {
 		
 		//Cadastrar Estoque
 		EstoqueModel estoqueModel  = new EstoqueModel();
-		this.cadastrarEstoque(estoque, estoqueModel);
+		estoqueModel = this.cadastrarEstoque(estoque, estoqueModel);
 		
 		//Cadastrar Cidade
 		CidadeModel cidadeModel = new CidadeModel();
-		cadastrarCidade(estoque, cidadeModel);
+		cidadeModel = cadastrarCidade(estoque, cidadeModel);
 		
 		//Cadastrar Fabricante
 		FabricanteModel fabricanteModel = new FabricanteModel();
-		this.cadastrarFabricante(estoque, fabricanteModel);
+		fabricanteModel = this.cadastrarFabricante(estoque, fabricanteModel);
 		
 		//Cadastrar Departamento
 		DepartamentoModel departamentoModel = new DepartamentoModel();
-		this.cadastrarDepartamento(cidadeModel.getIdCidade(), estoque, departamentoModel);
+		departamentoModel =	this.cadastrarDepartamento(cidadeModel.getIdCidade(), estoque, departamentoModel);
 		
 		
 		//Cadastrar Equipamento
 		EquipamentoModel equipamentoModel = new EquipamentoModel();
-		this.cadastrarEquipamento(fabricanteModel.getIdFabricante(), 
+		equipamentoModel = this.cadastrarEquipamento(fabricanteModel.getIdFabricante(), 
 				departamentoModel.getIdDepartamento(), estoqueModel.getIdEstoque(), estoque, equipamentoModel);
 		
 		//Registrar Estoque ao usuário
@@ -85,55 +85,59 @@ public class EquipamentoController {
 	}
 
 	
-	private void cadastrarEstoque(EstoqueDTO estoque, EstoqueModel estoqueModel) {
+	private EstoqueModel cadastrarEstoque(EstoqueDTO estoque, EstoqueModel estoqueModel) {
 		try {
 			estoqueModel.setDataEntrada(DataUtil.obterDataFormatada(estoque.getDataEntradaEstoque(), DataUtil.FORMATO_DATA_ANGULAR_HIFEN));
 			estoqueModel.setStatusEstoque(StatusEstoqueEnum.NOVA_ENTRADA.getCodigo());
-			estoqueModel = this.service.cadastrarEntradaEstoque(estoqueModel);
+			return this.service.cadastrarEntradaEstoque(estoqueModel);
 		} catch (Exception e) {
 			logger.error(e);
+			return null;
 		}
 		
 	}
 	
-	private void cadastrarCidade(EstoqueDTO estoque, CidadeModel cidadeModel) {
+	private CidadeModel cadastrarCidade(EstoqueDTO estoque, CidadeModel cidadeModel) {
 		try {
 			BeanUtils.copyProperties(estoque.getEquipamento().getDepartamento().getCidade(), cidadeModel);
-			this.service.cadastrarCidade(cidadeModel);
-			return;
+			return this.service.cadastrarCidade(cidadeModel);
 		} catch (Exception e) {
 			logger.error(e);
+			return null;
 		}
 		
 	}
 	
-	private void cadastrarDepartamento(Long idCidade, EstoqueDTO estoque, DepartamentoModel departamentoModel) {
+	private DepartamentoModel cadastrarDepartamento(Long idCidade, EstoqueDTO estoque, DepartamentoModel departamentoModel) {
 		try {
 			departamentoModel.setIdCidade(idCidade);
 			departamentoModel.setNomeDepartamento(estoque.getEquipamento().getDepartamento().getNomeDepartamento());
-			departamentoModel = this.service.cadastrarDepartamento(departamentoModel);
+			return this.service.cadastrarDepartamento(departamentoModel);
 		} catch (Exception e) {
 			logger.error(e);
+			return null;
 		}
 	}
-	private void cadastrarFabricante(EstoqueDTO estoque, FabricanteModel fabricanteModel) {
+	private FabricanteModel cadastrarFabricante(EstoqueDTO estoque, FabricanteModel fabricanteModel) {
 		try {
 			fabricanteModel.setNomeFabricante(estoque.getEquipamento().getFabricante().getNome());
-			fabricanteModel = this.service.cadastrarFabricante(fabricanteModel);
+			return this.service.cadastrarFabricante(fabricanteModel);
 		} catch (Exception e) {
 			logger.error(e);
+			return null;
 		}
 	}
 	
-	private void cadastrarEquipamento(Long idFabricante, Long idDepartamento, Long idEstoque, EstoqueDTO estoque, EquipamentoModel equipamentoModel) {
+	private EquipamentoModel cadastrarEquipamento(Long idFabricante, Long idDepartamento, Long idEstoque, EstoqueDTO estoque, EquipamentoModel equipamentoModel) {
 		try {
 			BeanUtils.copyProperties(estoque.getEquipamento(), equipamentoModel);
 			equipamentoModel.setIdDepartamento(idDepartamento);
 			equipamentoModel.setIdEstoque(idEstoque);
 			equipamentoModel.setIdFabricante(idFabricante);
-			equipamentoModel = this.service.cadastrarEquipamento(equipamentoModel);
+			return this.service.cadastrarEquipamento(equipamentoModel);
 		} catch (Exception e) {
 			logger.error(e);
+			return null;
 		}
 	}
 }

@@ -2,7 +2,7 @@ package br.com.estoque.model;
 
 import java.io.Serializable;
 import java.util.Date;
-import java.util.Set;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -18,10 +18,12 @@ import javax.persistence.TemporalType;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
+@AllArgsConstructor
 @NoArgsConstructor
 @Entity
 @Table(name = "tb_estoque")
@@ -49,8 +51,10 @@ public class EstoqueModel implements Serializable{
 	private int statusEstoque;
 	
 	@JsonIgnoreProperties("estoque")
-	@OneToMany(fetch = FetchType.LAZY)
+	@OneToMany(fetch = FetchType.EAGER)
 	@JoinColumn(name = "id_estoque", referencedColumnName = "id_estoque", insertable = false, nullable = true, updatable = false)
-	private Set<EquipamentoModel> equipamentos;
+	private List<EquipamentoModel> equipamentos;
+	
+	
 	
 }

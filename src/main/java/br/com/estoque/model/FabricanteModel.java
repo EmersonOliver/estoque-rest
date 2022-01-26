@@ -1,7 +1,7 @@
 package br.com.estoque.model;
 
 import java.io.Serializable;
-import java.util.Set;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -33,7 +33,7 @@ public class FabricanteModel implements Serializable {
 
 	@OneToMany(fetch = FetchType.LAZY)
 	@JoinColumn(name = "id_fabricante", referencedColumnName = "id_fabricante", insertable = false, updatable = false)
-	private Set<EquipamentoModel> equipamemntos;
+	private List<EquipamentoModel> equipamemntos;
 
 	public FabricanteModel(Long idFabricante, String nomeFabricante) {
 		super();
@@ -41,7 +41,7 @@ public class FabricanteModel implements Serializable {
 		this.nomeFabricante = nomeFabricante;
 	}
 
-	public FabricanteModel(Long idFabricante, String nomeFabricante, Set<EquipamentoModel> equipamemntos) {
+	public FabricanteModel(Long idFabricante, String nomeFabricante, List<EquipamentoModel> equipamemntos) {
 		super();
 		this.idFabricante = idFabricante;
 		this.nomeFabricante = nomeFabricante;

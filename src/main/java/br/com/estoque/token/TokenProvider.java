@@ -54,7 +54,7 @@ public class TokenProvider {
 	}
 
 	public Long getTokenId(String token) {
-		Claims body = Jwts.parser().setSigningKey(secret).parseClaimsJws(token).getBody();
+		Claims body = Jwts.parser().setSigningKey(secret).parseClaimsJws(token.replace("Bearer ", "")).getBody();
 		return Long.parseLong(body.getSubject());
 	}
 	

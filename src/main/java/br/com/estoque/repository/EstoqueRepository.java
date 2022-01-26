@@ -13,7 +13,7 @@ import br.com.estoque.model.EstoqueModel;
 @Repository
 public interface EstoqueRepository extends JpaRepository<EstoqueModel, Long>{
 	
-	@Query(name = "EstoqueModel.buscarEstoqueData", value = "SELECT e FROM EstoqueModel e WHERE e.dataEntrada BETWEEN :entradaMenor and :entradaMaior")
+	@Query(name = "EstoqueModel.buscarEstoqueData", value = "SELECT e FROM EstoqueModel e INNER JOIN e.equipamentos es WHERE e.dataEntrada BETWEEN :entradaMenor and :entradaMaior")
 	Optional<EstoqueModel> buscarEstoqueData(@Param("entradaMenor") Date entradaMenor,@Param("entradaMaior")  Date entradaMaior);
 
 }

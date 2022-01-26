@@ -4,6 +4,7 @@ import java.io.Serializable;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.ForeignKey;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -30,31 +31,31 @@ public class EquipamentoModel implements Serializable{
 	@Column(name = "id_equipamento", nullable = false, precision = 8, unique = true)
 	private Long idEquipamento;
 	
-	@Column(name = "id_fabricante")
+	@Column(name = "id_fabricante", nullable = false)
 	private Long idFabricante;
 	
-	@Column(name = "id_estoque")
+	@Column(name = "id_estoque", nullable = false)
 	private Long idEstoque;
 	
-	@Column(name = "id_departamento")
+	@Column(name = "id_departamento", nullable = false)
 	private Long idDepartamento;	
 	
-	@Column(name="nome_equipamento")
+	@Column(name="nome_equipamento", nullable = false)
 	private String nome;
 	
-	@Column(name = "numero_serie")
+	@Column(name = "numero_serie", nullable = false)
 	private String numeroSerie;
 	
-	@Column(name = "patrimonio")
+	@Column(name = "patrimonio", nullable = false)
 	private String patrimonio;
 	
-	@Column(name = "modelo")
+	@Column(name = "modelo", nullable = false)
 	private String modelo;
 	
-	@Column(name = "cor")
+	@Column(name = "cor", nullable = false)
 	private String cor;
 	
-	@Column(name = "status")
+	@Column(name = "status", nullable = false)
 	private int statusEquipamento;
 	
 	@ManyToOne
@@ -65,9 +66,8 @@ public class EquipamentoModel implements Serializable{
 	foreignKey = @ForeignKey(name="fk_id_departamento"))
 	private DepartamentoModel departamento;
 	
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "id_fabricante", 
-	referencedColumnName = "id_fabricante", 
 	insertable = false,
 	updatable = false,
 	foreignKey = @ForeignKey(name="fk_id_fabricante"))
