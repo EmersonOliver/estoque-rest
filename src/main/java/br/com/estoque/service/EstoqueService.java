@@ -1,6 +1,7 @@
 package br.com.estoque.service;
 
 import java.util.Date;
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -88,6 +89,14 @@ public class EstoqueService {
 
 	public void cadastrarEntradaUsuarioEstoque(EstoqueUsuarioModel estoqueUsuarioModel) {
 		this.usuarioEstoqueRepository.save(estoqueUsuarioModel);
+	}
+	
+	public List<DepartamentoModel> carregarDepartamentos(){
+		return this.departamentoRepository.carregarDepartamentosParams().get();
+	}
+	
+	public List<FabricanteModel> carregarFabricantes(){
+		return this.fabricanteRepository.carregarFabricantesParams().get();
 	}
 
 }

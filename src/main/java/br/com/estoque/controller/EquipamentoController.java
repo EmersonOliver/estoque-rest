@@ -7,10 +7,13 @@ import javax.servlet.http.HttpServletRequest;
 import org.jboss.logging.Logger;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.estoque.dto.EstoqueDTO;
@@ -76,14 +79,22 @@ public class EquipamentoController {
 			estoqueUsuarioModel.setIdEstoque(estoqueModel.getIdEstoque());
 			estoqueUsuarioModel.setIdUsuario(usuario.get().getIdUsuario());
 			this.service.cadastrarEntradaUsuarioEstoque(estoqueUsuarioModel);
-		}else {
-			//Roll back de todas as transacoes
-			return null;
 		}
+		return new ResponseEntity<>(HttpStatus.CREATED);
+	}
+
+	
+	@GetMapping(value = "consultar", produces = "application/json;charset=utf-8")
+	public ResponseEntity<?> buscarEquipamento(
+			@RequestParam("nome") String nomeEquipamento, 
+			@RequestParam("status")Integer statusEquipamento, 
+			@RequestParam("fabricante")Long fabricante,
+			@RequestParam("departamento") Long departamento){
+		
+		
 		
 		return null;
 	}
-
 	
 	private EstoqueModel cadastrarEstoque(EstoqueDTO estoque, EstoqueModel estoqueModel) {
 		try {

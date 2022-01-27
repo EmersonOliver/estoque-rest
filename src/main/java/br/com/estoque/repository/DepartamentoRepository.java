@@ -1,5 +1,6 @@
 package br.com.estoque.repository;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -15,5 +16,10 @@ public interface DepartamentoRepository extends JpaRepository<DepartamentoModel,
 	
 	@Query(name = "DepartamentoModel.buscarDepartamentoNome", value = "SELECT d FROM DepartamentoModel d WHERE UPPER(d.nomeDepartamento) = :nomeDepartamento")
 	public Optional<DepartamentoModel> buscarDepartamentoNome(@Param("nomeDepartamento") String nomeDepartamento);
+	
+	@Query(name="DepartamentoModel.carregarDepartamentosParams", 
+			value = "SELECT new DepartamentoModel(d.idDepartamento, d.nomeDepartamento) "
+					+ "FROM DepartamentoModel d ORDER By d.nomeDepartamento ASC")
+	public Optional<List<DepartamentoModel>> carregarDepartamentosParams();
 
 }
