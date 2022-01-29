@@ -3,15 +3,14 @@ package br.com.estoque.controller;
 import java.util.List;
 import java.util.Optional;
 import java.util.function.Function;
-import java.util.stream.Collectors;
 
 import javax.servlet.http.HttpServletRequest;
 
 import org.jboss.logging.Logger;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.convert.converter.Converter;
 import org.springframework.data.domain.Page;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -98,7 +97,7 @@ public class EquipamentoController {
 	@GetMapping(value = "consultar", produces = "application/json;charset=utf-8")
 	public ResponseEntity<?> buscarEquipamento(
 			@RequestParam(value = "nome", required = false) String nomeEquipamento, 
-			@RequestParam(value="status", required = false)Integer statusEquipamento, 
+			@RequestParam(value="status", required = false) List<Integer> statusEquipamento, 
 			@RequestParam(value="fabricante", required = false)Long fabricante,
 			@RequestParam(value="departamento", required = false) Long departamento,
 			@RequestParam(value="pagina", defaultValue = "0") Integer pagina, 
@@ -119,13 +118,14 @@ public class EquipamentoController {
 								source.getModelo(),
 								source.getCor(), 
 								StatusEquipamentoEnum.getStatusEquipamento(source.getStatusEquipamento()).getSituacao());
-						
 						return vo;      
 					}
 				});
-		
+		HttpHeaders headers = new HttpHeaders();
+		headers.add("X-Total-Count", String.valueOf(equipamentos.getTotalElements()));
+		headers.add("X-Total-Pages", String.valueOf(equipamentos.getTotalPages()));
 		return (equipamentos.isEmpty()) ? new ResponseEntity<>(HttpStatus.NO_CONTENT) 
-				: new ResponseEntity<>(equipamentos, HttpStatus.OK);
+				: new ResponseEntity<>(equipamentos, headers, HttpStatus.OK);
 	}
 	
 	private EstoqueModel cadastrarEstoque(EstoqueDTO estoque, EstoqueModel estoqueModel) {

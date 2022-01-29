@@ -21,30 +21,19 @@ public class ConsultaService {
 	@Autowired
 	private EquipamentoRepository equipamentoRepository;
 
-	public List<EquipamentoModel> buscarEquipamento(String nomeEquipamento, Integer statusEquipamento, Long fabricante,
-			Long departamento) {
-			return (nomeEquipamento == null || nomeEquipamento.equals("") 
-					&& statusEquipamento == null
-					&& fabricante == null
-					&& departamento == null) ? this.equipamentoRepository.listarEquipamentos() 
-							: this.equipamentoRepository.buscarEquipamento(nomeEquipamento, statusEquipamento, fabricante,
-							departamento);
-	}
-	
-	public Page<EquipamentoModel>pesquisar(String nomeEquipamento, Integer statusEquipamento, Long fabricante,
-			Long departamento, Integer page, String campo, String ordem){
-		
-		Specification<EquipamentoModel> specs = 
-				EquipamentoSpecs.nomeEquipamento(nomeEquipamento)
-						.or(EquipamentoSpecs.departamento(departamento)
-								.or(EquipamentoSpecs.fabricante(fabricante)
-										.or(EquipamentoSpecs.statusEquipamento(statusEquipamento))));
-		
-		Direction direction  = ordem.equals("desc") ? Sort.Direction.DESC : Sort.Direction.ASC;
+	public Page<EquipamentoModel> pesquisar(String nomeEquipamento, List<Integer> statusEquipamento, Long fabricante,
+			Long departamento, Integer page, String campo, String ordem) {
+		Direction direction = ordem.equals("desc") ? Sort.Direction.DESC : Sort.Direction.ASC;
 		Pageable pagination = PageRequest.of(page, 10, Sort.by(direction, campo));
-		
-		return this.equipamentoRepository.findAll(specs, pagination);
-		
+		if (nomeEquipamento == null && statusEquipamento == null && fabricante == null && departamento == null) {
+			return this.equipamentoRepository.findAll(pagination);
+		} else {
+			Specification<EquipamentoModel> specs = EquipamentoSpecs.nomeEquipamento(nomeEquipamento)
+					.or(EquipamentoSpecs.departamento(departamento).or(EquipamentoSpecs.fabricante(fabricante).or(
+							statusEquipamento != null ? EquipamentoSpecs.statusEquipamento(statusEquipamento) : null)));
+			return this.equipamentoRepository.findAll(specs, pagination);
+		}
+
 	}
 
 }
