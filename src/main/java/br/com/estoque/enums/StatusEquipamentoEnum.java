@@ -1,9 +1,9 @@
 package br.com.estoque.enums;
 
 public enum StatusEquipamentoEnum {
-	FUNCIONANDO(1, "000001"),
-	DANIFICADO(2, "000002"),
-	EM_MANUTENCAO(3, "000003");
+	FUNCIONANDO(1, "Funcionando"),
+	DANIFICADO(2, "Danificado"),
+	EM_MANUTENCAO(3, "Em Manutenção");
 	
 	private Integer codigo;
 	private String situacao;

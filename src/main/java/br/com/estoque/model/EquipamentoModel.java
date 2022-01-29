@@ -4,7 +4,6 @@ import java.io.Serializable;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.ForeignKey;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -58,6 +57,8 @@ public class EquipamentoModel implements Serializable{
 	@Column(name = "status", nullable = false)
 	private int statusEquipamento;
 	
+	
+	@JsonIgnoreProperties("equipamentos")
 	@ManyToOne
 	@JoinColumn(name = "id_departamento", 
 	referencedColumnName = "id_departamento", 
@@ -66,7 +67,8 @@ public class EquipamentoModel implements Serializable{
 	foreignKey = @ForeignKey(name="fk_id_departamento"))
 	private DepartamentoModel departamento;
 	
-	@ManyToOne(fetch = FetchType.LAZY)
+	@JsonIgnoreProperties("equipamemntos")
+	@ManyToOne
 	@JoinColumn(name = "id_fabricante", 
 	insertable = false,
 	updatable = false,

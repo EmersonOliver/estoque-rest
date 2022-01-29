@@ -91,12 +91,13 @@ public class EstoqueService {
 		this.usuarioEstoqueRepository.save(estoqueUsuarioModel);
 	}
 	
-	public List<DepartamentoModel> carregarDepartamentos(){
+	public List<DepartamentoModel> carregarParametrosDepartamento(){
 		return this.departamentoRepository.carregarDepartamentosParams().get();
 	}
 	
-	public List<FabricanteModel> carregarFabricantes(){
+	public List<FabricanteModel> carregarParametrosFabricante(){
 		return this.fabricanteRepository.carregarFabricantesParams().get();
 	}
+	
 
 }

@@ -13,6 +13,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -30,7 +32,8 @@ public class FabricanteModel implements Serializable {
 
 	@Column(name = "nome_fabricante")
 	private String nomeFabricante;
-
+	
+	@JsonIgnoreProperties("fabricante")
 	@OneToMany(fetch = FetchType.LAZY)
 	@JoinColumn(name = "id_fabricante", referencedColumnName = "id_fabricante", insertable = false, updatable = false)
 	private List<EquipamentoModel> equipamemntos;

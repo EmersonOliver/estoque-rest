@@ -1,12 +1,17 @@
 package br.com.estoque.controller;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 import javax.servlet.http.HttpServletRequest;
 
 import org.jboss.logging.Logger;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.convert.converter.Converter;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.estoque.dto.EstoqueDTO;
+import br.com.estoque.enums.StatusEquipamentoEnum;
 import br.com.estoque.enums.StatusEstoqueEnum;
 import br.com.estoque.model.CidadeModel;
 import br.com.estoque.model.DepartamentoModel;
@@ -24,11 +30,13 @@ import br.com.estoque.model.EquipamentoModel;
 import br.com.estoque.model.EstoqueModel;
 import br.com.estoque.model.EstoqueUsuarioModel;
 import br.com.estoque.model.FabricanteModel;
+import br.com.estoque.service.ConsultaService;
 import br.com.estoque.service.EstoqueService;
 import br.com.estoque.token.TokenProvider;
 import br.com.estoque.usuario.model.UsuarioModel;
 import br.com.estoque.usuario.service.UsuarioService;
 import br.com.estoque.util.DataUtil;
+import br.com.estoque.vo.EquipamentoVO;
 
 @RestController
 @RequestMapping("/equipamento")
@@ -38,6 +46,9 @@ public class EquipamentoController {
 
 	@Autowired
 	private EstoqueService service;
+	
+	@Autowired
+	private ConsultaService consultaService;
 	
 	@Autowired
 	private UsuarioService usuarioService;
@@ -86,14 +97,35 @@ public class EquipamentoController {
 	
 	@GetMapping(value = "consultar", produces = "application/json;charset=utf-8")
 	public ResponseEntity<?> buscarEquipamento(
-			@RequestParam("nome") String nomeEquipamento, 
-			@RequestParam("status")Integer statusEquipamento, 
-			@RequestParam("fabricante")Long fabricante,
-			@RequestParam("departamento") Long departamento){
+			@RequestParam(value = "nome", required = false) String nomeEquipamento, 
+			@RequestParam(value="status", required = false)Integer statusEquipamento, 
+			@RequestParam(value="fabricante", required = false)Long fabricante,
+			@RequestParam(value="departamento", required = false) Long departamento,
+			@RequestParam(value="pagina", defaultValue = "0") Integer pagina, 
+			@RequestParam(value="campo", defaultValue = "idEquipamento")String campo,
+			@RequestParam(value="ordem", defaultValue = "desc") String ordem){
 		
+		Page<EquipamentoVO> equipamentos = 
+				this.consultaService.pesquisar(nomeEquipamento, statusEquipamento, fabricante, 
+						departamento, pagina, campo, ordem).map( new Function<EquipamentoModel, EquipamentoVO>() {
+					@Override
+					public EquipamentoVO apply(EquipamentoModel source) {
+						EquipamentoVO vo = new EquipamentoVO(source.getIdEquipamento(), 
+								source.getNome(), 
+								source.getFabricante().getNomeFabricante(), 
+								source.getDepartamento().getNomeDepartamento(), 
+								source.getNumeroSerie(), 
+								source.getPatrimonio(), 
+								source.getModelo(),
+								source.getCor(), 
+								StatusEquipamentoEnum.getStatusEquipamento(source.getStatusEquipamento()).getSituacao());
+						
+						return vo;      
+					}
+				});
 		
-		
-		return null;
+		return (equipamentos.isEmpty()) ? new ResponseEntity<>(HttpStatus.NO_CONTENT) 
+				: new ResponseEntity<>(equipamentos, HttpStatus.OK);
 	}
 	
 	private EstoqueModel cadastrarEstoque(EstoqueDTO estoque, EstoqueModel estoqueModel) {

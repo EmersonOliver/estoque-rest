@@ -19,8 +19,8 @@ public class ParametrosController {
 	@GetMapping("listAll")
 	public ParamsDTO departamentoModel(){
 		ParamsDTO params = new ParamsDTO();
-		params.setDepartamentos(this.estoqueService.carregarDepartamentos());
-		params.setFabricantes(this.estoqueService.carregarFabricantes());
+		params.setDepartamentos(this.estoqueService.carregarParametrosDepartamento());
+		params.setFabricantes(this.estoqueService.carregarParametrosFabricante());
 		return params;
 	}
 	

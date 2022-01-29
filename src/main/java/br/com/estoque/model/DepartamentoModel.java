@@ -15,6 +15,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -37,6 +39,8 @@ public class DepartamentoModel implements Serializable {
 	@Column(name = "nome_departamento")
 	private String nomeDepartamento;
 
+	
+	@JsonIgnoreProperties("departamento")
 	@OneToMany(fetch = FetchType.EAGER)
 	@JoinColumn(name = "id_departamento", referencedColumnName = "id_departamento", insertable = false, updatable = false)
 	private List<EquipamentoModel> equipamentos;
