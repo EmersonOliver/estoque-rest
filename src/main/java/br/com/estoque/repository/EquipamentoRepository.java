@@ -1,6 +1,7 @@
 package br.com.estoque.repository;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
@@ -29,6 +30,9 @@ public interface EquipamentoRepository extends JpaRepository<EquipamentoModel, L
 	
 	@Query("SELECT e FROM EquipamentoModel e ORDER BY e.idEquipamento DESC")
 	List<EquipamentoModel> listarEquipamentos();
+	
+	@Query("SELECT e FROM EquipamentoModel e WHERE e.idEquipamento=:idEquipamento")
+	Optional<EquipamentoModel> detalharEquipamento(@Param("idEquipamento") Long idEquipamento);
 	
 	
 }

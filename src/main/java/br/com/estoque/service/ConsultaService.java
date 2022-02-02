@@ -33,7 +33,10 @@ public class ConsultaService {
 							statusEquipamento != null ? EquipamentoSpecs.statusEquipamento(statusEquipamento) : null)));
 			return this.equipamentoRepository.findAll(specs, pagination);
 		}
-
+	}
+	
+	public EquipamentoModel detalharEquipamento(Long idEquipamento) {
+		return this.equipamentoRepository.detalharEquipamento(idEquipamento).get();
 	}
 
 }
