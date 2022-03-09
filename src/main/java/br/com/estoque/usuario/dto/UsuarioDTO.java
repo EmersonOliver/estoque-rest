@@ -24,5 +24,8 @@ public class UsuarioDTO {
 	@NotEmpty(message = "Telefone nao pode ser vazio")
 	private String telefone;
 	
+	@NotEmpty(message = "Cargo nao pode ser vazio")
+	private String cargo;
+	
 
 }

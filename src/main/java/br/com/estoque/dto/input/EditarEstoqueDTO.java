@@ -1,4 +1,4 @@
-package br.com.estoque.dto;
+package br.com.estoque.dto.input;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

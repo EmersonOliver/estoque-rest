@@ -44,6 +44,9 @@ public class UsuarioModel implements UserDetails{
 	@Column(name = "email_usuario")
 	private String emailUsuario;
 	
+	@Column(name = "cargo")
+	private String cargo;
+	
 	@JsonIgnore
 	@Column(name = "senha_usuario")
 	private String senhaUsuario;

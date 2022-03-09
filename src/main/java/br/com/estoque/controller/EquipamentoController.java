@@ -22,8 +22,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.com.estoque.dto.EditarEstoqueDTO;
 import br.com.estoque.dto.EstoqueDTO;
+import br.com.estoque.dto.input.EditarEstoqueDTO;
 import br.com.estoque.enums.StatusEstoqueEnum;
 import br.com.estoque.model.CidadeModel;
 import br.com.estoque.model.DepartamentoModel;

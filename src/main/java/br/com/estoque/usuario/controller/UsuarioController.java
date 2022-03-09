@@ -38,6 +38,7 @@ public class UsuarioController {
 		usuarioModel.setNomeUsuario(usuarioDTO.getNome()+" " + usuarioDTO.getSobrenome());
 		usuarioModel.setSenhaUsuario(EncryptionSHA.encrypt(usuarioDTO.getSenha()));
 		usuarioModel.setTelefoneUsuario(usuarioDTO.getTelefone());
+		usuarioModel.setCargo(usuarioDTO.getCargo());
 		this.usuarioService.criarUsuario(usuarioModel);
 		return new ResponseEntity<>(usuarioModel, HttpStatus.CREATED);
 	}
