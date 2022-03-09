@@ -78,7 +78,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 		corsConfig.setAllowedHeaders(Arrays.asList("Authorization", "Content-Type"));
 
 		UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-		source.registerCorsConfiguration("/**", corsConfig);
+		source.registerCorsConfiguration("/estoque/api/**", corsConfig);
 		return source;
 	}
 

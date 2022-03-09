@@ -16,10 +16,14 @@ import javax.persistence.Table;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 @Data
 @NoArgsConstructor
+@ToString
+@EqualsAndHashCode
 @Entity
 @Table(name = "tb_fabricante")
 public class FabricanteModel implements Serializable {

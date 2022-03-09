@@ -2,7 +2,6 @@ package br.com.estoque.controller;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.function.Function;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -16,14 +15,15 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import br.com.estoque.dto.EditarEstoqueDTO;
 import br.com.estoque.dto.EstoqueDTO;
-import br.com.estoque.enums.StatusEquipamentoEnum;
 import br.com.estoque.enums.StatusEstoqueEnum;
 import br.com.estoque.model.CidadeModel;
 import br.com.estoque.model.DepartamentoModel;
@@ -37,7 +37,6 @@ import br.com.estoque.token.TokenProvider;
 import br.com.estoque.usuario.model.UsuarioModel;
 import br.com.estoque.usuario.service.UsuarioService;
 import br.com.estoque.util.DataUtil;
-import br.com.estoque.vo.EquipamentoVO;
 
 @RestController
 @RequestMapping("/equipamento")
@@ -106,34 +105,46 @@ public class EquipamentoController {
 			@RequestParam(value="campo", defaultValue = "idEquipamento")String campo,
 			@RequestParam(value="ordem", defaultValue = "desc") String ordem){
 		
-		Page<EquipamentoVO> equipamentos = 
-				this.consultaService.pesquisar(nomeEquipamento, statusEquipamento, fabricante, 
-						departamento, pagina, campo, ordem).map( new Function<EquipamentoModel, EquipamentoVO>() {
-					@Override
-					public EquipamentoVO apply(EquipamentoModel source) {
-						EquipamentoVO vo = new EquipamentoVO(source.getIdEquipamento(), 
-								source.getNome(), 
-								source.getFabricante().getNomeFabricante(), 
-								source.getDepartamento().getNomeDepartamento(), 
-								source.getNumeroSerie(), 
-								source.getPatrimonio(), 
-								source.getModelo(),
-								source.getCor(), 
-								StatusEquipamentoEnum.getStatusEquipamento(source.getStatusEquipamento()).getSituacao());
-						return vo;      
-					}
-				});
+		
+		Page<EquipamentoModel> resultEquipamentos = 
+				this.consultaService.pesquisar(nomeEquipamento, statusEquipamento, fabricante, departamento, pagina, campo, ordem);
 		HttpHeaders headers = new HttpHeaders();
-		headers.add("X-Total-Count", String.valueOf(equipamentos.getTotalElements()));
-		headers.add("X-Total-Pages", String.valueOf(equipamentos.getTotalPages()));
-		return (equipamentos.isEmpty()) ? new ResponseEntity<>(HttpStatus.NO_CONTENT) 
-				: new ResponseEntity<>(equipamentos, headers, HttpStatus.OK);
+		headers.add("X-Total-Count", String.valueOf(resultEquipamentos.getTotalElements()));
+		headers.add("X-Total-Pages", String.valueOf(resultEquipamentos.getTotalPages()));
+		return (resultEquipamentos.isEmpty()) ? new ResponseEntity<>(HttpStatus.NO_CONTENT) 
+				: new ResponseEntity<>(resultEquipamentos, headers, HttpStatus.OK);
 	}
 	
 	@GetMapping("detalhar/{idEquipamento}")
 	@ResponseBody
 	public ResponseEntity<?> detalharEquipamento(@PathVariable("idEquipamento") Long idEquipamento){
 		return new ResponseEntity<>(this.consultaService.detalharEquipamento(idEquipamento), HttpStatus.OK);
+	}
+	
+	@PutMapping("editar")
+	public ResponseEntity<?> editarEquipamento(@RequestBody EditarEstoqueDTO equipamento){
+		EquipamentoModel equipamentoModel = 
+				this.consultaService.detalharEquipamento(equipamento.getIdEquipamento());
+		DepartamentoModel departamentoModel = 
+				this.consultaService.detalharDepartamento(equipamento.getIdDepartamento());
+		
+		FabricanteModel fabricanteModel = 
+				this.consultaService.detalharFabricante(equipamento.getIdFabricante());
+		
+		EstoqueModel estoqueModel = 
+				this.consultaService.detalharEstoque(equipamento.getIdEstoque());
+		
+		BeanUtils.copyProperties(equipamento, equipamentoModel);
+		equipamentoModel.setIdDepartamento(departamentoModel.getIdDepartamento());
+		equipamentoModel.setIdFabricante(fabricanteModel.getIdFabricante());
+		equipamentoModel.setIdEstoque(estoqueModel.getIdEstoque());
+		equipamentoModel.setDepartamento(departamentoModel);
+		equipamentoModel.setFabricante(fabricanteModel);
+		equipamentoModel.setEstoque(estoqueModel);
+		equipamentoModel.setStatusEquipamento(equipamento.getStatus());
+		service.cadastrarEquipamento(equipamentoModel);
+		
+		return null;
 	}
 	
 	private EstoqueModel cadastrarEstoque(EstoqueDTO estoque, EstoqueModel estoqueModel) {

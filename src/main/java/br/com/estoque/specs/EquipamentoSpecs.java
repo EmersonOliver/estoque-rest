@@ -15,7 +15,7 @@ import br.com.estoque.model.EquipamentoModel;
 public class EquipamentoSpecs {
 	
 	public static Specification<EquipamentoModel> nomeEquipamento(String nomeEquipamento){
-		return (root, query, builder) -> builder.or(builder.equal(root.get("nome"), nomeEquipamento));
+		return (root, query, builder) -> builder.or(builder.like(root.get("nome"), nomeEquipamento+"%"));
 	}
 	
 	public static Specification<EquipamentoModel> statusEquipamento(List<Integer> statusEquipamento){

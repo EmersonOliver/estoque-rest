@@ -2,6 +2,7 @@ package br.com.estoque.dto;
 
 import java.util.List;
 
+import br.com.estoque.model.CidadeModel;
 import br.com.estoque.model.DepartamentoModel;
 import br.com.estoque.model.FabricanteModel;
 import lombok.NoArgsConstructor;
@@ -14,6 +15,8 @@ public class ParamsDTO {
 	private List<FabricanteModel> fabricantes;
 	
 	private List<DepartamentoModel> departamentos;
+	
+	private List<CidadeModel> cidades;
 	
 	
 }

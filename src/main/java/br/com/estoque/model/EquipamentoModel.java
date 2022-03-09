@@ -14,10 +14,16 @@ import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 @Data
+@AllArgsConstructor
+@ToString
+@EqualsAndHashCode
 @NoArgsConstructor
 @Entity
 @Table(name = "tb_equipamento")
@@ -70,6 +76,7 @@ public class EquipamentoModel implements Serializable{
 	@JsonIgnoreProperties("equipamemntos")
 	@ManyToOne
 	@JoinColumn(name = "id_fabricante", 
+	referencedColumnName = "id_fabricante",
 	insertable = false,
 	updatable = false,
 	foreignKey = @ForeignKey(name="fk_id_fabricante"))

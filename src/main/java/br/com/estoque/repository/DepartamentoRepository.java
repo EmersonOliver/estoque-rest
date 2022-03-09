@@ -18,7 +18,7 @@ public interface DepartamentoRepository extends JpaRepository<DepartamentoModel,
 	public Optional<DepartamentoModel> buscarDepartamentoNome(@Param("nomeDepartamento") String nomeDepartamento);
 	
 	@Query(name="DepartamentoModel.carregarDepartamentosParams", 
-			value = "SELECT new DepartamentoModel(d.idDepartamento, d.nomeDepartamento) "
+			value = "SELECT d "
 					+ "FROM DepartamentoModel d ORDER By d.nomeDepartamento ASC")
 	public Optional<List<DepartamentoModel>> carregarDepartamentosParams();
 

@@ -3,13 +3,11 @@ package br.com.estoque.token;
 import java.util.Calendar;
 import java.util.Date;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
 
 import br.com.estoque.usuario.model.UsuarioModel;
-import br.com.estoque.usuario.repository.UsuarioRepository;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -20,8 +18,6 @@ public class TokenProvider {
 	@Value("${jwt.secret}")
 	private String secret;
 	
-	@Autowired
-	private UsuarioRepository usuarioRepository;
 	
 //	@Bean
 //	public UserDetails defaultUser() {
