@@ -1,5 +1,6 @@
 package br.com.estoque.service;
 
+import java.util.Arrays;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -74,6 +75,11 @@ public class ConsultaService {
 
 	public EstoqueModel detalharEstoque(Long idEstoque) {
 		return this.estoqueRepository.findById(idEstoque).get();
+	}
+
+	public List<EquipamentoModel> listarEquipamento() {
+		Specification<EquipamentoModel> specs =  EquipamentoSpecs.statusEquipamento(Arrays.asList(1)).and(EquipamentoSpecs.statusEstoque(Arrays.asList(8,4,5)));
+		return this.equipamentoRepository.findAll(specs);
 	}
 
 }

@@ -24,6 +24,12 @@ public class DashboardController {
 	public ResponseEntity<DashboardDTO> dashboard() {
 		return new ResponseEntity<>(DashboardDTO.builder()
 				.countEquipamento(this.dashboardService.countEquipamento())
+				.countEquipamentoAlugados(this.dashboardService.countEquipamentoAlugados())
+				.countEquipamentoDanificado(this.dashboardService.countEquipamentoDanificado())
+				.countEquipamentoDisponiveis(this.dashboardService.countEquipamentoDisponiveis())
+				.countEquipamentoEmManutencao(this.dashboardService.countEquipamentoEmManutencao())
+				.countEquipamentoFuncionando(this.dashboardService.countEquipamentoFuncionando())
+				
 				.build(), HttpStatus.OK);
 	}
 

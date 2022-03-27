@@ -144,7 +144,14 @@ public class EquipamentoController {
 		equipamentoModel.setStatusEquipamento(equipamento.getStatus());
 		service.cadastrarEquipamento(equipamentoModel);
 		
-		return null;
+		return new ResponseEntity<>(equipamentoModel, HttpStatus.OK);
+	}
+	
+	@ResponseBody
+	@GetMapping("listar")
+	public ResponseEntity<?> listarEquipamento(){
+		List<EquipamentoModel> list = this.consultaService.listarEquipamento();
+		return new ResponseEntity<>((list.isEmpty()) ? HttpStatus.NO_CONTENT : list, HttpStatus.OK);
 	}
 	
 	private EstoqueModel cadastrarEstoque(EstoqueDTO estoque, EstoqueModel estoqueModel) {

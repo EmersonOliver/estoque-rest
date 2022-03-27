@@ -37,5 +37,18 @@ public class EquipamentoSpecs {
 	public static Specification<EquipamentoModel> departamento(Long departamento){
 		return (root, query, builder) -> builder.or(builder.equal(root.get("departamento").get("idDepartamento"), departamento));
 	}
+	
+	public static Specification<EquipamentoModel> statusEstoque(List<Integer> statusEstoque){
+		return new Specification<EquipamentoModel>() {
+			private static final long serialVersionUID = 1L;
+			@Override
+			public Predicate toPredicate(Root<EquipamentoModel> root, CriteriaQuery<?> query,
+					CriteriaBuilder criteriaBuilder) {
+			final Path<Integer> status = root.get("estoque").get("statusEstoque");
+				return status.in(statusEstoque);
+			}
+			
+		};
+	}
 
 }
