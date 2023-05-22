@@ -1,9 +1,12 @@
 pipeline{
     agent any
     stages {
-        stage('Inicial') {
+        stage('Build Image') {
             steps {
-                echo 'Inicializando pipeline'
+	            script {
+	                dockerapp = docker.build("eaoliveira5/estoque-api", '-f ./Dockerfile')
+	                
+	            }
             }
         }
     }
