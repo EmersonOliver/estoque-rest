@@ -4,7 +4,7 @@ pipeline{
         stage('Build Image') {
             steps {
 	            script {
-	                dockerapp = docker.build("eaoliveira5/estoque-api", '-f ./Dockerfile')
+	                dockerapp = docker.build("eaoliveira5/estoque-api", '-f ./Dockerfile ./')
 	                
 	            }
             }
