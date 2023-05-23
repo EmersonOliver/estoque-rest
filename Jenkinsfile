@@ -12,7 +12,11 @@ pipeline{
          }
 	 stage ('Build code') {
 	  steps {
-            bat  "mvn clean install -Dbuild.number=${BUILD_ID}-${BUILD_TIMESTAMP}-SNAPSHOT -DskipTests" 
+	  	   script {
+        DATE_TAG = java.time.LocalDate.now()
+  		DATETIME_TAG = java.time.LocalDateTime.now()
+    }
+            bat  "mvn clean install -Dbuild.number=${BUILD_ID}-${DATETIME_TAG}-SNAPSHOT -DskipTests" 
             }
          }
 	  }
