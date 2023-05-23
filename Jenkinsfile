@@ -12,7 +12,7 @@ pipeline{
          }
 	 stage ('Build code') {
 	  steps {
-            bat  "mvn clean install -Dbuild.number=${BUILD_ID} -DskipTests" 
+            bat  "mvn clean install -Dbuild.number=${BUILD_ID}-${BUILD_TIMESTAMP}-SNAPSHOT -DskipTests" 
             }
          }
 	  }
