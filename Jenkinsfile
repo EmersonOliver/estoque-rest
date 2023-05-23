@@ -5,18 +5,32 @@ pipeline{
        		  jdk 'jdk-8' 
        }
 	    stages {
-	 //   stage ('Initialize') {
-          //  steps {
-        //        sh '''
-          //          echo "PATH = ${PATH}"
-            //        echo "M2_HOME = ${M2_HOME}"
-              //  '''
-     //       }
-   //     }
-	 stage ('Build') {
+	stage ('Clone code') {
 	  steps {
-            sh  "mvn clean install -DskipTests"
+             git credentialsId: 'github', url: 'https://github.com/EmersonOliver/estoque-rest.git'
             }
          }
+	 stage ('Build code') {
+	  steps {
+            bat  "mvn clean install -DskipTests"
+            }
+         }
+	  }
+	  post {
+	      always{
+	          echo 'Teste'
+	      }
+	      success {
+	          echo 'sucess'
+	      }
+	      failure{
+	          echo 'failure'
+	      }
+	      unstable{
+	      	echo 'unstable'
+	      }
+	      changed{
+	      echo 'Changed'
+	      }
 	  }
 	}
