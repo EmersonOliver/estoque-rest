@@ -82,7 +82,7 @@
 	<!-- </scm> -->
 
 	<build>
-		<finalName>estoque-rest-${project.version}</finalName>
+		<finalName>estoque-rest-${build.number}</finalName>
 		<plugins>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
