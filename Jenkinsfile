@@ -16,7 +16,6 @@ pipeline{
 		        DATE_TAG = java.time.LocalDate.now()
 		  		DATETIME_TAG = java.time.LocalDateTime.now()
     		}
-    		bat "mvn versions:set -DnewVersion=${BUILD_ID}-${DATETIME_TAG}-SNAPSHOT -f enforcer/pom.xml"
             bat  "mvn clean install -Dbuild.number=${BUILD_ID} -DskipTests" 
             }
          }
