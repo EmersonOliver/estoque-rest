@@ -15,7 +15,7 @@ pipeline{
    //     }
 	 stage ('Build') {
 	  steps {
-               echo 'CARAI'
+               sh 'mvn clean install -DskipTests'
             }
          }
 	  }
